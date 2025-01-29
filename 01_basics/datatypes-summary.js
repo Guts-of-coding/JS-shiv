@@ -31,3 +31,8 @@ const myFunction = function(){
 
 // non primitive has return type object
 // function return type is object function
+
+//  *************************************************************************
+
+// types of memory
+// Stack(Primitive) , Heap(Non Primitive) idhar memory ka reference milta hai
