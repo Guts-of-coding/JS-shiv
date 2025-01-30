@@ -35,4 +35,25 @@ const myFunction = function(){
 //  *************************************************************************
 
 // types of memory
-// Stack(Primitive) , Heap(Non Primitive) idhar memory ka reference milta hai
+// Stack(Primitive) idhar variable milta hai,original value ka copy milta hai ; Heap(Non Primitive) idhar variable ka reference milta hai,actual chnages ke liye
+
+let myName = "shivanshu"
+
+let anotherName = "babu"
+anotherName = "Guts"
+
+console.log(myName);
+console.log(anotherName);
+
+let userOne = {
+    email: "user@google.com"
+}
+
+let userTwo = userOne
+
+userTwo.email = "myemail@google.com"
+
+console.log(userOne.email);
+console.log(userTwo.email);
+
+
