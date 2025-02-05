@@ -7,7 +7,7 @@
 // console.log(match.toString()); // to change the datatype to string
 // console.log(match);
 
-// console.log(match.toFixed(2)); // decimals ke baad kitne numbers tak ans aayega uske liye
+// console.log(match.toFixed(2)); // decimals ke baad kitne numbers tak ans aayega uske liye , e-commerce application bana rahe hai toh issen use kariye
 
 
 const anotherNumber = 436.6743
