@@ -9,7 +9,6 @@ let myDate = new Date()
 // console.log(JSON.stringify(myDate));
 // console.log(typeof myDate);
 
-<<<<<<< HEAD
 let myCreatedDate = new Date(2025, 0, 16 )
 // console.log(myCreatedDate.toDateString());
 
@@ -27,7 +26,6 @@ console.log(newDate.getMonth() + 1); // basic syntax for calculating month in pr
 newDate.toLocaleString('default', {
     era: "long",
 })
-=======
 // let myCreatedDate = new Date(2009, 3, 16)   month '0 se start hota hai yeh format mein
 //let myCreatedDate = new Date(2009, 3, 16, 5, 8) // jitna aage info dete jayege utna woh bifurcate karega
                                                  // for eg. year,month,date,time,day,minutes,hours etc
@@ -51,7 +49,6 @@ console.log(newDate);
 
 
 
->>>>>>> addcade29db2f7110357c929649e23a9618be0d5
 
 
 
