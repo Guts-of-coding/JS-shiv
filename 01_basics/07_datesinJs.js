@@ -36,8 +36,8 @@ let myCreatedDate = new Date("2022-12-18")
 
 let myTimeStamp = Date.now()
 
-// console.log(myTimeStamp);
-// console.log(myCreatedDate.getTime()); //compare karne ke liye humesha milisecond mein compare karna chaiye
+console.log(myTimeStamp);
+console.log(myCreatedDate.getTime()); //compare karne ke liye humesha milisecond mein compare karna chaiye
 
 // above method when building booking websites aur apps
 
