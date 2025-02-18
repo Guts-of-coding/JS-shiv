@@ -31,9 +31,11 @@ console.log(Array.from({name: "GUTS"})); // asked in interview questions regardi
 
 
 let name1 = "GUTS"
-let name2 = "THORFINN"
+let name2 = "THOR"
 let name3 = "BAKI"
 
 console.log(Array.of(name1, name2, name3));
+
+
 
 
