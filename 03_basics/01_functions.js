@@ -77,3 +77,18 @@ function handleObject(anyobject){
 }
 
 handleObject(user)
+
+handleObject({
+    username: "Shivanshu",
+    price: 299
+})
+
+const myOwnArray = [100, 200, 300, 400]
+
+function returnSecondValue(getArray){
+    return getArray[1]
+    
+}
+console.log(returnSecondValue(myOwnArray));
+
+
