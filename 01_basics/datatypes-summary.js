@@ -51,7 +51,7 @@ let userOne = {
 
 let userTwo = userOne
 
-userTwo.email = "mymail@google.com"
+userTwo.email = "my mail@google.com" // dot daalke obejct ke components ko access kiya ja sakta hai
 
 console.log(userOne.email);
 console.log(userTwo.email);

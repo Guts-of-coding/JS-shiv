@@ -1,7 +1,7 @@
 // const score = 5
 // console.log(score); // iske output mein number hi ata hai but woh define nahi hota hai
 
-// const match = new Number(160904) // iske output mein number define karke aata hai
+// const match = new Number(260904) // iske output mein number define karke aata hai
 // console.log(match);
 
 // console.log(match.toString()); // to change the datatype to string

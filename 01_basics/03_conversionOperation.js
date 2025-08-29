@@ -47,7 +47,7 @@ console.log(str3);
 
 console.log("1"+2);
 console.log(1 + "2");
-console.log("1" + 2 +2); // If string si first then rest of the values are also treated as string
+console.log("1" + 2 +2); // If string is first then rest of the values are also treated as string
 console.log(1 + 2 + "2"); // If the last value is string then first values are treated as numeric */
 
 // use parenthesis for defining operations in JS

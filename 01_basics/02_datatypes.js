@@ -20,4 +20,4 @@ let isLoggedIn = false
 
 console.log(typeof "Shivanshu");
 
-console.log(typeof null);
+console.log(typeof 20);
