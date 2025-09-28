@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeCompanion.AI - Complete Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #74ebd5;
+            --user-msg-bg: var(--primary-color);
+            --bot-msg-bg: #f1f0f0;
+            --body-bg: #f4f7f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --light-text-color: #888;
+            --input-bg: #f8f9fa;
+            --input-border: #e0e0e0;
+            --suggestion-bg: #e9ecef;
+            --suggestion-hover-bg: #d4dae0;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        body.dark-mode {
+            --primary-color: #0d6efd;
+            --secondary-color: #88f0dd;
+            --user-msg-bg: var(--primary-color);
+            --bot-msg-bg: #3a3b3c;
+            --body-bg: #18191a;
+            --card-bg: #242526;
+            --text-color: #e4e6eb;
+            --light-text-color: #b0b3b8;
+            --input-bg: #3a3b3c;
+            --input-border: #4a4a4a;
+            --suggestion-bg: #4a4a4a;
+            --suggestion-hover-bg: #5a5a5a;
+            --glass-bg: rgba(0, 0, 0, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+            background: var(--body-bg);
+            margin: 0;
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* Glass morphism effects */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Navigation */
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--glass-bg);
+            transform: translateY(-2px);
+        }
+
+        /* Language Selector */
+        .language-selector {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-color);
+            padding: 0.5rem;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .language-selector option {
+            background: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: relative;
+            width: 50px;
+            height: 24px;
+        }
+
+        .theme-toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--glass-border);
+            transition: 0.4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--text-color);
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Main Container */
+        .main-container {
+            margin-top: 80px;
+            padding: 2rem;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .auth-card {
+            max-width: 450px;
+            width: 100%;
+            padding: 2.5rem;
+            color: var(--text-color);
+            animation: fadeInUp 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-control {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+            backdrop-filter: blur(5px);
+        }
+
+        .form-control::placeholder {
+            color: var(--light-text-color);
+        }
+
+        .form-control:focus {
+            background: var(--glass-bg);
+            border-color: var(--primary-color);
+            color: var(--text-color);
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Chat Interface */
+        .chat-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            background: var(--body-bg);
+        }
+
+        .message-wrapper {
+            display: flex;
+            align-items: flex-end;
+            gap: 10px;
+            max-width: 75%;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .message-wrapper.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .avatar.user {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .avatar.bot {
+            background: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .message {
+            padding: 12px 16px;
+            border-radius: 18px;
+            background: var(--bot-msg-bg);
+            color: var(--text-color);
+            word-wrap: break-word;
+            position: relative;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .message.user {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .timestamp {
+            font-size: 0.75rem;
+            color: var(--light-text-color);
+            margin-top: 5px;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .message-wrapper:hover .message-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            background: var(--glass-bg);
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            background: var(--suggestion-hover-bg);
+            transform: scale(1.1);
+        }
+
+        /* Input Area */
+        .chat-input {
+            padding: 1rem;
+            border-top: 1px solid var(--input-border);
+            background: var(--card-bg);
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 25px;
+            padding: 8px 15px;
+            margin-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .input-row:focus-within {
+            border-color: var(--primary-color);
+        }
+
+        .message-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text-color);
+            font-size: 16px;
+            padding: 8px 0;
+        }
+
+        .input-btn {
+            background: var(--primary-color);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .input-btn:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .input-btn.recording {
+            background: #dc3545;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* File Upload Area */
+        .file-upload {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .upload-btn {
+            background: var(--glass-bg);
+            border: 2px dashed var(--input-border);
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-color);
+            text-align: center;
+            min-width: 150px;
+        }
+
+        .upload-btn:hover {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .uploaded-image {
+            max-width: 200px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        /* Safety Dashboard */
+        .safety-dashboard {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .safety-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .stat-card {
+            background: var(--glass-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--light-text-color);
+            font-size: 0.9rem;
+        }
+
+        /* Utility Classes */
+        .hidden { display: none !important; }
+        .fade-transition { opacity: 0.7; transition: opacity 0.3s ease; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-nav { padding: 1rem; }
+            .nav-container { flex-wrap: wrap; }
+            .chat-container { height: 70vh; margin: 0 1rem; }
+            .auth-card { margin: 0 1rem; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--body-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+
+<body id="vanta-bg">
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-brand">🛡️ SafeCompanion.AI</a>
+            <div class="nav-controls">
+                <select id="languageSelector" class="language-selector">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="hi">🇮🇳 हिन्दी</option>
+                    <option value="mr">🇮🇳 मराठी</option>
+                </select>
+                <label class="theme-toggle">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+                <button id="showDashboard" class="nav-btn" title="Safety Dashboard">
+                    <i class="fas fa-chart-bar"></i>
+                </button>
+                <button id="logoutBtn" class="nav-btn hidden" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Login Form -->
+        <div id="loginSection" class="auth-container">
+            <div class="auth-card glass">
+                <h2 class="text-center mb-4" data-translate="login_title">Welcome Back</h2>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <input type="text" id="loginUsername" class="form-control" 
+                               data-translate-placeholder="username" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" id="loginPassword" class="form-control" 
+                               data-translate-placeholder="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" data-translate="login_btn">Login</button>
+                </form>
+                <div id="loginMessage" class="mt-3"></div>
+                <p class="text-center mt-3">
+                    <span data-translate="no_account">Don't have an account?</span>
+                    <a href="#" id="showRegister" class="text-decoration-none" data-translate="register_link">Register</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerSection" class="auth-container hidden">
+            <div class="auth-card glass">
+                <h2 class="text-center mb-4" data-translate="register_title">Create Account</h2>
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <input type="text" id="regUsername" class="form-control" 
+                               data-translate-placeholder="username" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" id="regEmail" class="form-control" 
+                               data-translate-placeholder="email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" id="regPassword" class="form-control" 
+                               data-translate-placeholder="password" placeholder="Password" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" id="regConfirmPassword" class="form-control" 
+                               data-translate-placeholder="confirm_password" placeholder="Confirm Password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" data-translate="register_btn">Register</button>
+                </form>
+                <div id="registerMessage" class="mt-3"></div>
+                <p class="text-center mt-3">
+                    <span data-translate="have_account">Already have an account?</span>
+                    <a href="#" id="showLogin" class="text-decoration-none" data-translate="login_link">Login</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Chat Interface -->
+        <div id="chatSection" class="hidden">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <div class="chat-title" data-translate="chat_title">SafeCompanion.AI Chat</div>
+                    <div class="chat-controls">
+                        <button id="clearChat" class="nav-btn" title="Clear Chat">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button id="toggleTTS" class="nav-btn" title="Toggle Voice">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be added here dynamically -->
+                </div>
+
+                <div class="chat-input">
+                    <!-- File Upload Area -->
+                    <div class="file-upload">
+                        <label class="upload-btn" for="imageUpload">
+                            <i class="fas fa-image"></i>
+                            <span data-translate="upload_image">Upload Image</span>
+                            <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                        </label>
+                        <div id="imagePreview"></div>
+                    </div>
+
+                    <!-- Input Row -->
+                    <div class="input-row">
+                        <input type="text" id="messageInput" class="message-input" 
+                               data-translate-placeholder="type_message" placeholder="Type your message...">
+                        <button id="micBtn" class="input-btn" title="Voice Input">
+                            <i class="fas fa-microphone"></i>
+                        </button>
+                        <button id="sendBtn" class="input-btn" title="Send">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Safety Dashboard -->
+        <div id="dashboardSection" class="hidden">
+            <div class="safety-dashboard">
+                <h3 data-translate="safety_dashboard">🛡️ Safety Dashboard</h3>
+                <p data-translate="dashboard_desc">Monitor chat safety and activity logs</p>
+                
+                <div class="safety-stats">
+                    <div class="stat-card glass">
+                        <div class="stat-number" id="totalMessages">0</div>
+                        <div class="stat-label" data-translate="total_messages">Total Messages</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-number" id="flaggedContent">0</div>
+                        <div class="stat-label" data-translate="flagged_content">Flagged Content</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-number" id="piiDetected">0</div>
+                        <div class="stat-label" data-translate="pii_detected">PII Detected</div>
+                    </div>
+                    <div class="stat-card glass">
+                        <div class="stat-number" id="imageUploads">0</div>
+                        <div class="stat-label" data-translate="image_uploads">Image Uploads</div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h4 data-translate="recent_activity">Recent Activity</h4>
+                    <div id="activityLog" class="glass" style="padding: 1rem; border-radius: 10px; max-height: 300px; overflow-y: auto;">
+                        <!-- Activity logs will be displayed here -->
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button id="backToChat" class="btn btn-primary" data-translate="back_to_chat">Back to Chat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.rings.min.js"></script>
+
+    <script>
+        // ===== TRANSLATION SYSTEM =====
+        const translations = {
+            en: {
+                login_title: "Welcome Back",
+                register_title: "Create Account",
+                username: "Username",
+                email: "Email",
+                password: "Password",
+                confirm_password: "Confirm Password",
+                login_btn: "Login",
+                register_btn: "Register",
+                no_account: "Don't have an account?",
+                register_link: "Register",
+                have_account: "Already have an account?",
+                login_link: "Login",
+                chat_title: "SafeCompanion.AI Chat",
+                type_message: "Type your message...",
+                upload_image: "Upload Image",
+                safety_dashboard: "🛡️ Safety Dashboard",
+                dashboard_desc: "Monitor chat safety and activity logs",
+                total_messages: "Total Messages",
+                flagged_content: "Flagged Content",
+                pii_detected: "PII Detected",
+                image_uploads: "Image Uploads",
+                recent_activity: "Recent Activity",
+                back_to_chat: "Back to Chat",
+                direction: "ltr"
+            },
+            hi: {
+                login_title: "वापस आपका स्वागत है",
+                register_title: "खाता बनाएं",
+                username: "उपयोगकर्ता नाम",
+                email: "ईमेल",
+                password: "पासवर्ड",
+                confirm_password: "पासवर्ड की पुष्टि करें",
+                login_btn: "लॉगिन करें",
+                register_btn: "पंजीकरण करें",
+                no_account: "कोई खाता नहीं है?",
+                register_link: "पंजीकरण करें",
+                have_account: "पहले से खाता है?",
+                login_link: "लॉगिन करें",
+                chat_title: "SafeCompanion.AI चैट",
+                type_message: "अपना संदेश टाइप करें...",
+                upload_image: "छवि अपलोड करें",
+                safety_dashboard: "🛡️ सुरक्षा डैशबोर्ड",
+                dashboard_desc: "चैट सुरक्षा और गतिविधि लॉग की निगरानी करें",
+                total_messages: "कुल संदेश",
+                flagged_content: "फ्लैग किया गया कंटेंट",
+                pii_detected: "PII का पता लगाया गया",
+                image_uploads: "छवि अपलोड",
+                recent_activity: "हालिया गतिविधि",
+                back_to_chat: "चैट पर वापस जाएं",
+                direction: "ltr"
+            },
+            mr: {
+                login_title: "परत आपले स्वागत आहे",
+                register_title: "खाते तयार करा",
+                username: "वापरकर्त्याचे नाव",
+                email: "ईमेल",
+                password: "पासवर्ड",
+                confirm_password: "पासवर्ड पुष्टी करा",
+                login_btn: "लॉगिन करा",
+                register_btn: "नोंदणी करा",
+                no_account: "खाते नाही?",
+                register_link: "नोंदणी करा",
+                have_account: "आधीपासून खाते आहे?",
+                login_link: "लॉगिन करा",
+                chat_title: "SafeCompanion.AI चॅट",
+                type_message: "तुमचा संदेश टाइप करा...",
+                upload_image: "प्रतिमा अपलोड करा",
+                safety_dashboard: "🛡️ सुरक्षा डॅशबोर्ड",
+                dashboard_desc: "चॅट सुरक्षा आणि क्रियाकलाप लॉगचे निरीक्षण करा",
+                total_messages: "एकूण संदेश",
+                flagged_content: "फ्लॅग केलेली सामग्री",
+                pii_detected: "PII आढळले",
+                image_uploads: "प्रतिमा अपलोड",
+                recent_activity: "अलीकडील क्रियाकलाप",
+                back_to_chat: "चॅटवर परत जा",
+                direction: "ltr"
+            }
+        };
+
+        // ===== GLOBAL VARIABLES =====
+        let currentLanguage = localStorage.getItem('preferredLanguage') || 'en';
+        let currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
+        let activityLog = JSON.parse(localStorage.getItem('activityLog') || '[]');
+        let ttsEnabled = true;
+        let recognition;
+        let isListening = false;
+        let hasSeenIntro = localStorage.getItem('hasSeenIntro') === 'true';
+
+        // Safety counters
+        let safetyStats = {
+            totalMessages: 0,
+            flaggedContent: 0,
+            piiDetected: 0,
+            imageUploads: 0
+        };
+
+        // ===== TRANSLATION FUNCTIONS =====
+        function translatePage() {
+            const t = translations[currentLanguage] || translations['en'];
+            
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (t[key]) element.textContent = t[key];
+            });
+
+            document.querySelectorAll('[data-translate-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-translate-placeholder');
+                if (t[key]) element.placeholder = t[key];
+            });
+
+            document.body.className = document.body.className.replace(/\brtl\b/g, '');
+            if (t.direction === 'rtl') document.body.classList.add('rtl');
+        }
+
+        // ===== SAFETY FILTERS =====
+        function applySafetyFilters(text) {
+            let flagged = false;
+            let piiDetected = false;
+            let filteredText = text;
+            let severityLevel = 0; // 0=clean, 1=mild, 2=moderate, 3=severe
+
+            // Enhanced inappropriate content detection with severity levels
+
+            // Level 1: Mild profanity
+            const mildProfanity = /\b(damn|hell|crap|piss|ass)\b/gi;
+            
+            // Level 2: Strong profanity and offensive terms
+            const strongProfanity = /\b(fuck|fucking|shit|bitch|bastard|cunt|asshole|faggot|slut|whore)\b/gi;
+            
+            // Level 2: Derogatory/bullying terms
+            const bullyingWords = /\b(dumb|stupid|idiot|moron|retard|loser|worthless|ugly|fat|pathetic)\b/gi;
+            
+            // Level 3: Hate speech and slurs (most severe)
+            const hateSlurs = /\b(nigger|chink|spic|terrorist|nazi|hitler|jew|muslim|christian)(?:\s+(?:scum|trash|filth))?\b/gi;
+            
+            // Level 3: Self-harm expressions (critical)
+            const selfHarmWords = /\b(suicide|kill\s+myself|cut\s+myself|hurt\s+myself|hang\s+myself|end\s+my\s+life|bleed\s+out|self\s+harm|want\s+to\s+die)\b/gi;
+            
+            // Level 3: Direct threats (most critical)
+            const threatWords = /\b(i\s+will\s+kill\s+you|kill\s+yourself|go\s+die|i\s+hate\s+you|shoot\s+you|bomb|murder|stab\s+you|attack\s+you)\b/gi;
+            
+            // Level 2: General violence
+            const violentWords = /\b(kill|death|violence|weapon|gun|knife|blood|torture)\b/gi;
+            
+            // Level 2: Adult/sexual content
+            const adultContent = /\b(sex|porn|nude|naked|xxx|adult|sexual|erotic|intimate|masturbate|orgasm)\b/gi;
+
+            // Check each category and apply appropriate filtering
+            if (threatWords.test(text) || selfHarmWords.test(text)) {
+                flagged = true;
+                severityLevel = 3; // Critical
+                filteredText = filteredText.replace(threatWords, '[THREAT-BLOCKED]');
+                filteredText = filteredText.replace(selfHarmWords, '[SELF-HARM-BLOCKED]');
+                safetyStats.flaggedContent++;
+            }
+            
+            if (hateSlurs.test(text)) {
+                flagged = true;
+                severityLevel = Math.max(severityLevel, 3); // Critical
+                filteredText = filteredText.replace(hateSlurs, '[HATE-SPEECH-BLOCKED]');
+                safetyStats.flaggedContent++;
+            }
+            
+            if (strongProfanity.test(text) || bullyingWords.test(text)) {
+                flagged = true;
+                severityLevel = Math.max(severityLevel, 2); // Moderate
+                filteredText = filteredText.replace(strongProfanity, '[PROFANITY-FILTERED]');
+                filteredText = filteredText.replace(bullyingWords, '[OFFENSIVE-FILTERED]');
+                safetyStats.flaggedContent++;
+            }
+            
+            if (violentWords.test(text) || adultContent.test(text)) {
+                flagged = true;
+                severityLevel = Math.max(severityLevel, 2); // Moderate
+                filteredText = filteredText.replace(violentWords, '[VIOLENCE-FILTERED]');
+                filteredText = filteredText.replace(adultContent, '[ADULT-CONTENT-FILTERED]');
+                safetyStats.flaggedContent++;
+            }
+            
+            if (mildProfanity.test(text)) {
+                flagged = true;
+                severityLevel = Math.max(severityLevel, 1); // Mild
+                filteredText = filteredText.replace(mildProfanity, '[MILD-LANGUAGE-FILTERED]');
+                safetyStats.flaggedContent++;
+            }
+
+            // Enhanced PII Detection
+            
+            // Phone numbers (various formats)
+            const phoneRegex = /(\+?1[-.\s]?)?(\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}|\b\d{10,15}\b)/g;
+            
+            // Email addresses
+            const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+            
+            // Credit card numbers (basic pattern)
+            const creditCardRegex = /\b(?:\d{4}[-\s]?){3}\d{4}\b|\b\d{13,19}\b/g;
+            
+            // Bank account numbers (8-17 digits)
+            const bankAccountRegex = /\b\d{8,17}\b/g;
+            
+            // Social Security Numbers
+            const ssnRegex = /\b\d{3}-?\d{2}-?\d{4}\b/g;
+            
+            // IP Addresses
+            const ipRegex = /\b(?:[0-9]{1,3}\.){3}[0-9]{1,3}\b/g;
+            
+            // Addresses (basic pattern)
+            const addressRegex = /\b\d+\s+[A-Za-z\s]+(?:street|st|avenue|ave|road|rd|drive|dr|lane|ln|boulevard|blvd|court|ct|place|pl)\b/gi;
+            
+            // Names pattern (common first names)
+            const nameRegex = /\b(my name is|i am|call me|i'm)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)?)\b/gi;
+
+            // Check for PII
+            let piiFound = false;
+            
+            if (phoneRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(phoneRegex, '[PHONE-PROTECTED]');
+            }
+            
+            if (emailRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(emailRegex, '[EMAIL-PROTECTED]');
+            }
+            
+            if (creditCardRegex.test(text) && !bankAccountRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(creditCardRegex, '[CARD-NUMBER-PROTECTED]');
+            }
+            
+            if (ssnRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(ssnRegex, '[SSN-PROTECTED]');
+            }
+            
+            if (ipRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(ipRegex, '[IP-ADDRESS-PROTECTED]');
+            }
+            
+            if (addressRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(addressRegex, '[ADDRESS-PROTECTED]');
+            }
+            
+            if (nameRegex.test(text)) {
+                piiFound = true;
+                filteredText = filteredText.replace(nameRegex, (match, prefix, name) => {
+                    return `${prefix} [NAME-PROTECTED]`;
+                });
+            }
+
+            if (piiFound) {
+                piiDetected = true;
+                safetyStats.piiDetected++;
+            }
+
+            return { text: filteredText, flagged, piiDetected, severityLevel };
+        }
+
+        // ===== BOT RESPONSES =====
+        const botResponses = {
+            en: {
+                greetings: [
+                    "Hello! 👋 I'm SafeCompanion.AI. How can I help you today?",
+                    "Hi there! 😊 I'm here to listen and support you. What's on your mind?",
+                    "Welcome! I'm your AI companion, ready to chat safely and helpfully."
+                ],
+                sadness: [
+                    "I'm sorry you're feeling this way 😔. Remember, it's okay to feel sad sometimes. Would you like to talk about it?",
+                    "I understand you're going through a tough time. I'm here to listen without judgment."
+                ],
+                happiness: [
+                    "That's wonderful! 😊 I love hearing positive news. What's making you feel so good?",
+                    "Your happiness is contagious! ✨ Thank you for sharing your joy with me."
+                ],
+                default: [
+                    "That's interesting. Tell me more about that.",
+                    "I'm here to listen. How does that make you feel?",
+                    "Thank you for sharing that with me. What would you like to explore next?"
+                ]
+            },
+            hi: {
+                greetings: [
+                    "नमस्ते! 👋 मैं SafeCompanion.AI हूं। आज मैं आपकी कैसे सहायता कर सकता हूं?",
+                    "हैलो! 😊 मैं यहां आपकी बात सुनने और सहायता करने के लिए हूं।",
+                    "स्वागत है! मैं आपका AI साथी हूं।"
+                ],
+                sadness: [
+                    "मुझे खुशी है कि आपने अपनी भावना साझा की 😔। कभी-कभी उदास होना सामान्य है।",
+                    "मैं समझ सकता हूं कि आप कठिन समय से गुजर रहे हैं।"
+                ],
+                happiness: [
+                    "यह बहुत अच्छी बात है! 😊 आपकी खुशी देखकर मुझे भी अच्छा लगता है।",
+                    "आपकी खुशी संक्रामक है! ✨ धन्यवाद।"
+                ],
+                default: [
+                    "यह दिलचस्प है। इसके बारे में और बताएं।",
+                    "मैं सुनने के लिए यहां हूं। इससे आपको कैसा लगता है?",
+                    "इसे साझा करने के लिए धन्यवाद।"
+                ]
+            },
+            mr: {
+                greetings: [
+                    "नमस्कार! 👋 मी SafeCompanion.AI आहे। आज मी तुमची कशी मदत करू शकतो?",
+                    "हॅलो! 😊 मी तुमचे ऐकण्यासाठी आणि मदतीसाठी इथे आहे।",
+                    "स्वागत आहे! मी तुमचा AI साथी आहे।"
+                ],
+                sadness: [
+                    "तुम्ही असे वाटत आहात हे ऐकून दुःख झाले 😔। कधी कधी दुःखी वाटणे सामान्य आहे।",
+                    "मी समजू शकतो की तुम्ही कठीण काळातून जात आहात।"
+                ],
+                happiness: [
+                    "हे खूप छान आहे! 😊 तुमची आनंदी बातमी ऐकून मला आनंद झाला।",
+                    "तुमचा आनंद संसर्गजन्य आहे! ✨ धन्यवाद।"
+                ],
+                default: [
+                    "हे मनोरंजक आहे। याबद्दल अधिक सांगा।",
+                    "मी ऐकण्यासाठी इथे आहे। यावरून तुम्हाला कसे वाटते?",
+                    "हे शेअर केल्याबद्दल धन्यवाद।"
+                ]
+            }
+        };
+
+        function getBotResponse(userText, wasFlagged, hadPII, severityLevel = 0) {
+            const responses = botResponses[currentLanguage] || botResponses['en'];
+            const text = userText.toLowerCase();
+
+            // Special responses based on severity level
+            if (wasFlagged) {
+                const criticalResponses = {
+                    en: [
+                        "🚨 I'm very concerned about what you've shared. If you're having thoughts of self-harm, please reach out to a mental health professional or call a crisis hotline immediately. Your safety matters.",
+                        "🚨 I've detected content that suggests you may be in crisis. Please contact emergency services (911) or a mental health crisis line. You don't have to face this alone.",
+                        "🚨 The content you've shared is very concerning. Please speak with a trusted adult, counselor, or call a crisis helpline. There are people who want to help you."
+                    ],
+                    hi: [
+                        "🚨 आपने जो कुछ साझा किया है, वह बहुत चिंताजनक है। कृपया किसी मानसिक स्वास्थ्य पेशेवर से संपर्क करें या तुरंत क्राइसिस हॉटलाइन पर कॉल करें।",
+                        "🚨 मैंने ऐसी सामग्री का पता लगाया है जो बताती है कि आप संकट में हो सकते हैं। कृपया आपातकालीन सेवाओं से संपर्क करें।",
+                        "🚨 आपने जो सामग्री साझा की है वह बहुत चिंताजनक है। कृपया किसी विश्वसनीय व्यक्ति से बात करें।"
+                    ],
+                    mr: [
+                        "🚨 तुम्ही जे काही शेअर केले आहे ते अतिशय चिंताजनक आहे। कृपया मानसिक आरोग्य व्यावसायिकाशी संपर्क साधा।",
+                        "🚨 मी अशी सामग्री शोधली आहे जी सूचित करते की तुम्ही संकटात असू शकता। कृपया आपत्कालीन सेवांशी संपर्क साधा।",
+                        "🚨 तुम्ही शेअर केलेली सामग्री अतिशय चिंताजनक आहे। कृपया विश्वसनीय व्यक्तीशी बोला।"
+                    ]
+                };
+
+                const moderateResponses = {
+                    en: [
+                        "⚠️ I understand you're upset, but let's try to communicate in a more respectful way. I'm here to help you work through whatever you're feeling. What's really bothering you?",
+                        "⚠️ I notice some harsh language. It sounds like you might be going through a tough time. Would you like to talk about what's making you feel this way?",
+                        "⚠️ Let's pause and redirect our conversation. I'm here to support you, but in a way that feels safe for both of us. What can I help you with today?"
+                    ],
+                    hi: [
+                        "⚠️ मैं समझ सकता हूं कि आप परेशान हैं, लेकिन आइए अधिक सम्मानजनक तरीके से बात करने की कोशिश करें।",
+                        "⚠️ मैं कुछ कठोर भाषा देख रहा हूं। लगता है कि आप कठिन समय से गुजर रहे हैं।",
+                        "⚠️ आइए रुकें और अपनी बातचीत को पुनर्निर्देशित करें। मैं आपका समर्थन करने के लिए यहां हूं।"
+                    ],
+                    mr: [
+                        "⚠️ मी समजू शकतो की तुम्ही अस्वस्थ आहात, पण चला अधिक आदरणीय पद्धतीने बोलण्याचा प्रयत्न करूया.",
+                        "⚠️ मी काही कठोर भाषा पाहत आहे. असे वाटते की तुम्ही कठीण काळातून जात आहात.",
+                        "⚠️ चला थांबूया आणि आमचे संभाषण पुनर्निर्देशित करूया. मी तुमचे समर्थन करण्यासाठी येथे आहे."
+                    ]
+                };
+
+                const mildResponses = {
+                    en: [
+                        "💙 I can see you might be frustrated. Let's keep our conversation positive and constructive. How can I help you feel better?",
+                        "💙 I understand emotions can run high sometimes. Let's focus on what's really bothering you so I can help.",
+                        "💙 Let's try to express ourselves in a more positive way. I'm here to listen and support you."
+                    ],
+                    hi: [
+                        "💙 मैं देख सकता हूं कि आप निराश हो सकते हैं। आइए अपनी बातचीत को सकारात्मक रखें।",
+                        "💙 मैं समझता हूं कि कभी-कभी भावनाएं तेज हो सकती हैं।",
+                        "💙 आइए खुद को अधिक सकारात्मक तरीके से व्यक्त करने की कोशिश करें।"
+                    ],
+                    mr: [
+                        "💙 मी पाहू शकतो की तुम्ही निराश असू शकता. चला आमचे संभाषण सकारात्मक ठेवूया.",
+                        "💙 मी समजतो की कधी कधी भावना तीव्र होऊ शकतात.",
+                        "💙 चला स्वतःला अधिक सकारात्मक पद्धतीने व्यक्त करण्याचा प्रयत्न करूया."
+                    ]
+                };
+
+                let responseArray;
+                if (severityLevel >= 3) {
+                    responseArray = criticalResponses[currentLanguage] || criticalResponses['en'];
+                } else if (severityLevel >= 2) {
+                    responseArray = moderateResponses[currentLanguage] || moderateResponses['en'];
+                } else {
+                    responseArray = mildResponses[currentLanguage] || mildResponses['en'];
+                }
+                
+                return responseArray[Math.floor(Math.random() * responseArray.length)];
+            }
+
+            // Special responses for PII detection
+            if (hadPII) {
+                const piiResponses = {
+                    en: [
+                        "🔒 I've protected your personal information for your safety. Please avoid sharing sensitive details like phone numbers, addresses, or financial information online.",
+                        "🛡️ For your security, I've filtered out personal information from your message. Let's continue our conversation without sharing private details.",
+                        "⚠️ I noticed you shared personal information. I've secured it for your protection. Please be careful about sharing sensitive data online."
+                    ],
+                    hi: [
+                        "🔒 आपकी सुरक्षा के लिए मैंने आपकी व्यक्तिगत जानकारी को सुरक्षित कर दिया है। कृपया संवेदनशील विवरण साझा करने से बचें।",
+                        "🛡️ आपकी सुरक्षा के लिए, मैंने आपके संदेश से व्यक्तिगत जानकारी को फिल्टर कर दिया है।",
+                        "⚠️ मैंने देखा कि आपने व्यक्तिगत जानकारी साझा की है। मैंने इसे आपकी सुरक्षा के लिए सुरक्षित कर दिया है।"
+                    ],
+                    mr: [
+                        "🔒 तुमच्या सुरक्षिततेसाठी मी तुमची वैयक्तिक माहिती संरक्षित केली आहे। कृपया संवेदनशील तपशील शेअर करणे टाळा.",
+                        "🛡️ तुमच्या सुरक्षिततेसाठी, मी तुमच्या संदेशातून वैयक्तिक माहिती फिल्टर केली आहे.",
+                        "⚠️ मी पाहिले की तुम्ही वैयक्तिक माहिती शेअर केली आहे. मी ती तुमच्या संरक्षणासाठी सुरक्षित केली आहे."
+                    ]
+                };
+                const piiResponses_lang = piiResponses[currentLanguage] || piiResponses['en'];
+                return piiResponses_lang[Math.floor(Math.random() * piiResponses_lang.length)];
+            }
+
+            // Regular responses
+            if (text.includes('hello') || text.includes('hi') || text.includes('नमस्ते') || text.includes('नमस्कार')) {
+                return responses.greetings[Math.floor(Math.random() * responses.greetings.length)];
+            }
+
+            if (text.includes('sad') || text.includes('unhappy') || text.includes('उदास') || text.includes('दुखी')) {
+                return responses.sadness[Math.floor(Math.random() * responses.sadness.length)];
+            }
+
+            if (text.includes('happy') || text.includes('good') || text.includes('खुश') || text.includes('आनंद')) {
+                return responses.happiness[Math.floor(Math.random() * responses.happiness.length)];
+            }
+
+            return responses.default[Math.floor(Math.random() * responses.default.length)];
+        }
+
+        // ===== UTILITY FUNCTIONS =====
+        function showSection(sectionId) {
+            document.querySelectorAll('.auth-container, #chatSection, #dashboardSection').forEach(el => {
+                el.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+
+        function determineInitialSection() {
+            // If user is already logged in, go straight to chat
+            if (currentUser) {
+                return 'chatSection';
+            }
+            
+            // If user has never registered before, show registration first
+            if (users.length === 0 && !hasSeenIntro) {
+                return 'registerSection';
+            }
+            
+            // Otherwise show login
+            return 'loginSection';
+        }
+
+        function addMessage(text, sender, isImage = false) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = `message-wrapper ${sender}`;
+
+            const avatar = document.createElement('div');
+            avatar.className = `avatar ${sender}`;
+            avatar.innerHTML = sender === 'user' ? 
+                (currentUser.username ? currentUser.username.charAt(0).toUpperCase() : 'U') : 
+                '<i class="fas fa-robot"></i>';
+
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+
+            const message = document.createElement('div');
+            message.className = `message ${sender}`;
+
+            if (isImage) {
+                const img = document.createElement('img');
+                img.src = text;
+                img.className = 'uploaded-image';
+                message.appendChild(img);
+            } else {
+                message.textContent = text;
+            }
+
+            const timestamp = document.createElement('div');
+            timestamp.className = 'timestamp';
+            timestamp.textContent = new Date().toLocaleTimeString();
+
+            const actions = document.createElement('div');
+            actions.className = 'message-actions';
+
+            if (sender === 'bot') {
+                const speakBtn = document.createElement('button');
+                speakBtn.className = 'action-btn';
+                speakBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                speakBtn.onclick = () => speakText(text);
+                actions.appendChild(speakBtn);
+            }
+
+            const copyBtn = document.createElement('button');
+            copyBtn.className = 'action-btn';
+            copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+            copyBtn.onclick = () => {
+                navigator.clipboard.writeText(text).then(() => {
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '<i class="fas fa-copy"></i>';
+                    }, 1000);
+                });
+            };
+            actions.appendChild(copyBtn);
+
+            messageContent.appendChild(message);
+            messageContent.appendChild(timestamp);
+            messageContent.appendChild(actions);
+
+            messageWrapper.appendChild(avatar);
+            messageWrapper.appendChild(messageContent);
+
+            messagesContainer.appendChild(messageWrapper);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            // Log activity
+            if (sender === 'user') {
+                safetyStats.totalMessages++;
+                logActivity('text', text, '', false, false);
+            }
+
+            updateDashboard();
+        }
+
+        function logActivity(inputType, userInput, aiReply, flagged, piiDetected) {
+            const activity = {
+                timestamp: new Date().toISOString(),
+                inputType,
+                userInput: userInput.substring(0, 100) + (userInput.length > 100 ? '...' : ''),
+                aiReply: aiReply.substring(0, 100) + (aiReply.length > 100 ? '...' : ''),
+                flagged,
+                piiDetected
+            };
+
+            activityLog.unshift(activity);
+            if (activityLog.length > 100) activityLog.pop(); // Keep only last 100 activities
+            
+            localStorage.setItem('activityLog', JSON.stringify(activityLog));
+        }
+
+        function updateDashboard() {
+            document.getElementById('totalMessages').textContent = safetyStats.totalMessages;
+            document.getElementById('flaggedContent').textContent = safetyStats.flaggedContent;
+            document.getElementById('piiDetected').textContent = safetyStats.piiDetected;
+            document.getElementById('imageUploads').textContent = safetyStats.imageUploads;
+
+            // Update activity log with better formatting
+            const activityContainer = document.getElementById('activityLog');
+            activityContainer.innerHTML = activityLog.slice(0, 10).map(activity => {
+                const flaggedStyle = activity.flagged ? 'border-left: 4px solid #dc3545;' : '';
+                const piiStyle = activity.piiDetected ? 'border-left: 4px solid #fd7e14;' : '';
+                const borderStyle = flaggedStyle || piiStyle || 'border-left: 4px solid #28a745;';
+                
+                return `
+                    <div style="margin-bottom: 10px; padding: 10px; background: var(--glass-bg); border-radius: 5px; ${borderStyle}">
+                        <small style="color: var(--light-text-color);">${new Date(activity.timestamp).toLocaleString()}</small><br>
+                        <strong>${activity.inputType.toUpperCase()}:</strong> ${activity.userInput}
+                        ${activity.flagged ? '<span style="color: #dc3545; margin-left: 10px;">⚠️ Inappropriate Content</span>' : ''}
+                        ${activity.piiDetected ? '<span style="color: #fd7e14; margin-left: 10px;">🔒 Personal Info Protected</span>' : ''}
+                        ${!activity.flagged && !activity.piiDetected ? '<span style="color: #28a745; margin-left: 10px;">✅ Safe</span>' : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ===== SPEECH FUNCTIONS =====
+        function speakText(text) {
+            if (!ttsEnabled || !text.trim()) return;
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            const langMap = { en: 'en-US', hi: 'hi-IN', mr: 'mr-IN' };
+            utterance.lang = langMap[currentLanguage] || 'en-US';
+            utterance.rate = 0.9;
+            utterance.pitch = 1;
+
+            speechSynthesis.speak(utterance);
+        }
+
+        function initializeSpeechRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                const langMap = { en: 'en-US', hi: 'hi-IN', mr: 'mr-IN' };
+                recognition.lang = langMap[currentLanguage] || 'en-US';
+                recognition.interimResults = false;
+
+                recognition.onresult = (event) => {
+                    const spokenText = event.results[0][0].transcript;
+                    document.getElementById('messageInput').value = spokenText;
+                    sendMessage();
+                };
+
+                recognition.onstart = () => {
+                    isListening = true;
+                    document.getElementById('micBtn').classList.add('recording');
+                };
+
+                recognition.onend = () => {
+                    isListening = false;
+                    document.getElementById('micBtn').classList.remove('recording');
+                };
+
+                recognition.onerror = () => {
+                    isListening = false;
+                    document.getElementById('micBtn').classList.remove('recording');
+                };
+            }
+        }
+
+        // ===== MESSAGE HANDLING =====
+        function sendMessage() {
+            const messageInput = document.getElementById('messageInput');
+            const text = messageInput.value.trim();
+            
+            if (!text) return;
+
+            const safetyResult = applySafetyFilters(text);
+            addMessage(safetyResult.text, 'user');
+            messageInput.value = '';
+
+            // Simulate bot response with delay
+            setTimeout(() => {
+                const botResponse = getBotResponse(text, safetyResult.flagged, safetyResult.piiDetected, safetyResult.severityLevel);
+                addMessage(botResponse, 'bot');
+                
+                if (ttsEnabled) {
+                    setTimeout(() => speakText(botResponse), 500);
+                }
+
+                logActivity('text', safetyResult.text, botResponse, safetyResult.flagged, safetyResult.piiDetected);
+            }, 1000);
+        }
+
+        // ===== IMAGE PROCESSING =====
+        function processImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imageDataUrl = e.target.result;
+                
+                // Add image to chat
+                addMessage(imageDataUrl, 'user', true);
+                safetyStats.imageUploads++;
+                
+                // Show preview
+                const preview = document.getElementById('imagePreview');
+                preview.innerHTML = `<img src="${imageDataUrl}" class="uploaded-image" style="max-width: 150px;">`;
+                
+                // Simulate OCR extraction (in real app, you'd send to backend)
+                setTimeout(() => {
+                    const simulatedText = "Text extracted from image: Sample text content";
+                    const botResponse = `I can see your image! ${getBotResponse(simulatedText)}`;
+                    addMessage(botResponse, 'bot');
+                    
+                    if (ttsEnabled) {
+                        setTimeout(() => speakText(botResponse), 500);
+                    }
+
+                    logActivity('image', 'Image uploaded', botResponse, false, false);
+                    updateDashboard();
+                }, 1500);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // ===== EVENT LISTENERS =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize
+            translatePage();
+            initializeSpeechRecognition();
+            updateDashboard();
+
+            // Check if user is logged in and determine initial section
+            const initialSection = determineInitialSection();
+            
+            if (currentUser) {
+                showSection('chatSection');
+                document.getElementById('logoutBtn').classList.remove('hidden');
+                addMessage(`Welcome back, ${currentUser.username}! 👋`, 'bot');
+            } else {
+                showSection(initialSection);
+                // Show welcome message for first-time users
+                if (initialSection === 'registerSection' && !hasSeenIntro) {
+                    setTimeout(() => {
+                        document.getElementById('registerMessage').innerHTML = 
+                            '<div class="alert alert-info">👋 Welcome! Please create your account to get started with SafeCompanion.AI</div>';
+                    }, 500);
+                }
+            }
+
+            // Language selector
+            document.getElementById('languageSelector').value = currentLanguage;
+            document.getElementById('languageSelector').addEventListener('change', function() {
+                currentLanguage = this.value;
+                localStorage.setItem('preferredLanguage', currentLanguage);
+                translatePage();
+                if (recognition) {
+                    const langMap = { en: 'en-US', hi: 'hi-IN', mr: 'mr-IN' };
+                    recognition.lang = langMap[currentLanguage] || 'en-US';
+                }
+            });
+
+            // Theme toggle
+            const themeToggle = document.getElementById('themeToggle');
+            const currentTheme = localStorage.getItem('theme');
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.checked = true;
+            }
+            themeToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('loginUsername').value.trim();
+                const password = document.getElementById('loginPassword').value.trim();
+
+                const user = users.find(u => u.username === username && u.password === password);
+                if (user) {
+                    currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    // Show success message before transitioning
+                    document.getElementById('loginMessage').innerHTML = 
+                        '<div class="alert alert-success">🎉 Login successful! Welcome to SafeCompanion.AI</div>';
+                    
+                    setTimeout(() => {
+                        showSection('chatSection');
+                        document.getElementById('logoutBtn').classList.remove('hidden');
+                        addMessage(`Welcome to SafeCompanion.AI, ${user.username}! 👋 I'm your safe AI companion, ready to chat, listen, and help you with anything you need. How are you feeling today?`, 'bot');
+                        document.getElementById('loginMessage').innerHTML = '';
+                    }, 1500);
+                } else {
+                    document.getElementById('loginMessage').innerHTML = 
+                        '<div class="alert alert-danger">❌ Invalid username or password!</div>';
+                }
+            });
+
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const username = document.getElementById('regUsername').value.trim();
+                const email = document.getElementById('regEmail').value.trim();
+                const password = document.getElementById('regPassword').value.trim();
+                const confirmPassword = document.getElementById('regConfirmPassword').value.trim();
+
+                if (password !== confirmPassword) {
+                    document.getElementById('registerMessage').innerHTML = 
+                        '<div class="alert alert-danger">Passwords do not match!</div>';
+                    return;
+                }
+
+                if (users.find(u => u.username === username)) {
+                    document.getElementById('registerMessage').innerHTML = 
+                        '<div class="alert alert-danger">Username already exists!</div>';
+                    return;
+                }
+
+                const newUser = { username, email, password };
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('hasSeenIntro', 'true');
+
+                document.getElementById('registerMessage').innerHTML = 
+                    '<div class="alert alert-success">🎉 Registration successful! Redirecting to login...</div>';
+                
+                this.reset();
+                setTimeout(() => {
+                    showSection('loginSection');
+                    document.getElementById('loginMessage').innerHTML = 
+                        '<div class="alert alert-info">✨ Account created! Please login to continue.</div>';
+                }, 2000);
+            });
+
+            // Navigation between login/register
+            document.getElementById('showRegister').addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('registerSection');
+                document.getElementById('registerMessage').innerHTML = '';
+            });
+
+            document.getElementById('showLogin').addEventListener('click', (e) => {
+                e.preventDefault();
+                showSection('loginSection');
+                document.getElementById('loginMessage').innerHTML = '';
+            });
+
+            // Chat functionality
+            document.getElementById('sendBtn').addEventListener('click', sendMessage);
+            document.getElementById('messageInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') sendMessage();
+            });
+
+            // Microphone button
+            document.getElementById('micBtn').addEventListener('click', function() {
+                if (!recognition) return;
+                
+                if (isListening) {
+                    recognition.stop();
+                } else {
+                    recognition.start();
+                }
+            });
+
+            // Image upload
+            document.getElementById('imageUpload').addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    processImage(file);
+                }
+            });
+
+            // Chat controls
+            document.getElementById('clearChat').addEventListener('click', function() {
+                document.getElementById('chatMessages').innerHTML = '';
+                addMessage('Chat cleared! How can I help you?', 'bot');
+            });
+
+            document.getElementById('toggleTTS').addEventListener('click', function() {
+                ttsEnabled = !ttsEnabled;
+                this.innerHTML = ttsEnabled ? '<i class="fas fa-volume-up"></i>' : '<i class="fas fa-volume-mute"></i>';
+                this.title = ttsEnabled ? 'Disable Voice' : 'Enable Voice';
+            });
+
+            // Dashboard
+            document.getElementById('showDashboard').addEventListener('click', function() {
+                showSection('dashboardSection');
+                updateDashboard();
+            });
+
+            document.getElementById('backToChat').addEventListener('click', function() {
+                showSection('chatSection');
+            });
+
+            // Logout
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                // Show confirmation
+                if (confirm('Are you sure you want to logout?')) {
+                    currentUser = null;
+                    localStorage.removeItem('currentUser');
+                    document.getElementById('logoutBtn').classList.add('hidden');
+                    showSection('loginSection');
+                    document.getElementById('chatMessages').innerHTML = '';
+                    document.getElementById('loginMessage').innerHTML = 
+                        '<div class="alert alert-info">👋 You have been logged out successfully.</div>';
+                }
+            });
+        });
+
+        // Initialize Vanta.js background
+        setTimeout(() => {
+            if (window.VANTA) {
+                VANTA.RINGS({
+                    el: "#vanta-bg",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    backgroundColor: 0x18191a,
+                    color: 0x0d6efd
+                });
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
