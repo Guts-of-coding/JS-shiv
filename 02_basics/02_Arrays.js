@@ -9,7 +9,7 @@ const villian = ["GRIFFITH", "JOHAN", "THORKELL" ]
 // const allpeople = char.concat(villian) //concat se sirf 2 strings ko join kar sakte hai; aur woh itna use bhi nahi hota 
 // console.log(allpeople);
 
-const all_new_people = [...char, ...villian] //spred() method 2 se jyada strings ko attach kar sakta hai aur mostly yahi use hota hai
+const all_new_people = [...char, ...villian] //spread() method 2 se jyada strings ko attach kar sakta hai aur mostly yahi use hota hai
 
 //console.log(all_new_people);
 
