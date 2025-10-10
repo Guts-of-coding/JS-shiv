@@ -40,4 +40,4 @@ console.log(Jsuser.greeting());
 
 Jsuser.greetingTwo =  function(){
     console.log(`Hello GUTS here ${this.name}`);
-    console.log(Jsuser.greetingTwo());
+    console.log(Jsuser.greetingTwo());} 
