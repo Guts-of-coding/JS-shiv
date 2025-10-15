@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Dom Learning</title>
+    
+ 
+</head>
+<body class="bg-black">
+    <style>
+        .bg-black {
+            background-color: grey;
+            color: white;
+        }
+    </style>
+    <div id="title" class="styles">
+        <h1 class="heading">DOM learning for understanding</h1>
+        <p>Lorem ipsum dolor sit amet.</p>
+    </div>
+
+    <ul>
+        <li>GUTS</li>
+        <li>THORFINN</li>
+        <li>VAGABOND</li>
+    </ul>
+</body>
+</html> 
+
+<!-- 1) getAttribute() mein key pass karni hoti hai aur value milti hai
+ jaise ki getAttribute('class'),
+2)setAttribute humesha overwrite karta hai
+3) styles bhi set kar sakte hai bas difference itna hai ki html mein ' styles = "" ' aise set karte hai
+   aur console mein '.styles.bgcolor = '' ' aise set karte hai
+4) querySelector('') se hume page pe sabse pehle element usse related milta hai. isko css ki tarah likte hai.
+5) NodeList aur Array mein difference hota hai. NodeList dikhta array jaisa hai par uske pass woh sari properties nahi hai aaray ki.
+6) NodeList pe foreach loop hi laga sakte hai.
+7) querySelector se text wagera bhi change kar sakte hai
+8) array mein convert karne ke liye 'Array.from(kis value ko convert karna hai array mein). iske baad looping ho sakti hai
+9) vscode mein hi script tag use karke humlog document manipulate kar sakte hai
+10) basic for loop chalta hai HTML collection elements pe
+11) parent.secondElementSibling aisa karke kuch nahi hota
+12) appendChild() use hota hai element inject karne ke liye page pe
+13) createElement('') se element direct create kar skate hai
+14) createTextNode() se directly text node kar sakte hai

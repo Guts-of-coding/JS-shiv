@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning | DOM</title>
+</head>
+<body style="background-color: grey; color: yellow;">
+    <ul class="character">
+        <li>THORFINN</li>
+    </ul>
+</body>
+<script>
+    function addCharacter(charName){
+        const li = document.createElement('li');
+        li.innerHTML = `${charName}`
+        document.querySelector('.character'). 
+        appendChild(li)
+    }
+    addCharacter("GUTS")
+    addCharacter("KRUL")
+
+    function addOptiCharacter(charname){
+        const li = document.createElement('li')
+        li.appendChild(document.createTextNode(charname))
+        document.querySelector('.character').appendChild(li)
+    }
+    addOptiCharacter('EVAR')
+
+    // EDIT
+    const secondChar = document.querySelector("li:nth-child(2)")
+   // secondChar.innerHTML = "GRIFFITH" use less kyuki optimized approach nahi hai.
+   const newChar = document.createElement('li')
+   newChar.textContent = "GRIFFITH"
+   secondChar.replaceWith(newChar)
+    
+    const firstChar = document.querySelector("li:first-child")
+    firstChar.outerHTML = '<li>SKULL</>'
+
+    //remove
+    const lastChar = document.querySelector("li:last-child")
+    lastChar.remove()
+</script>
+</html>
