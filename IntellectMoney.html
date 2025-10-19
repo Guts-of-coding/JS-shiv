@@ -1,0 +1,1592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IntellectMoney - AI-Powered Financial Advisory Platform</title>
+    <meta name="description" content="Transform your financial future with AI-driven investment strategies, personalized portfolio management, and expert financial advisory services in India.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2c5282;
+            --accent-color: #3182ce;
+            --success-color: #38a169;
+            --warning-color: #d69e2e;
+            --danger-color: #e53e3e;
+            --text-primary: #2d3748;
+            --text-secondary: #4a5568;
+            --text-light: #718096;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f7fafc;
+            --bg-tertiary: #edf2f7;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background-color: var(--bg-secondary);
+        }
+
+        /* Header Styles */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-sm);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--accent-color);
+            font-size: 2rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-primary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent-color);
+            background-color: rgba(49, 130, 206, 0.1);
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23ffffff" fill-opacity="0.05"><circle cx="36" cy="24" r="5"/></g></svg>');
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: white;
+            padding: 3rem 2rem;
+            margin-top: -2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 5rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .service-icon {
+            width: 4rem;
+            height: 4rem;
+            background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-features {
+            list-style: none;
+        }
+
+        .service-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .service-features li i {
+            color: var(--success-color);
+            font-size: 0.875rem;
+        }
+
+        /* Tools Section */
+        .tools-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .tool-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Investment Calculator */
+        .calculator-section {
+            padding: 5rem 2rem;
+            background: var(--bg-secondary);
+        }
+
+        .calculator-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .calculator-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-input {
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .calculator-results {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 0.75rem;
+            margin-top: 2rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-value {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .testimonial-content {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 3rem;
+            height: 3rem;
+            background: var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .author-info p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 3rem 2rem 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .services-grid,
+            .tools-grid,
+            .testimonials-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Dashboard Styles */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .dashboard-header h3 {
+            margin: 0;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+
+        .status-indicator {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-indicator.live {
+            background: #e8f5e8;
+            color: #2d5a2d;
+        }
+
+        .status-indicator.active {
+            background: #e8f0ff;
+            color: #1a365d;
+        }
+
+        .status-indicator.learning {
+            background: #fff5e6;
+            color: #8b4513;
+        }
+
+        .status-indicator.tracking {
+            background: #f0e6ff;
+            color: #4a1a4a;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .trend-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .trend-indicator.positive {
+            color: #22c55e;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: #856404;
+        }
+
+        .action-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .action-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .action-item.completed {
+            background: #f0f9ff;
+            border-color: #bae6fd;
+        }
+
+        .action-item.pending {
+            background: #fefce8;
+            border-color: #fde047;
+        }
+
+        .action-item.suggested {
+            background: #f0fdf4;
+            border-color: #bbf7d0;
+        }
+
+        .approve-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .approve-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .behavior-insights {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 6px;
+        }
+
+        .insight-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .insight-value {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .personalization-note {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #fef3c7;
+            border-radius: 8px;
+            color: #92400e;
+            font-size: 0.9rem;
+        }
+
+        .income-metrics {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+
+        .value {
+            font-weight: 600;
+        }
+
+        .value.high {
+            color: #dc2626;
+        }
+
+        .value.good {
+            color: #16a34a;
+        }
+
+        .gig-worker-note {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: #ecfdf5;
+            border-radius: 8px;
+            color: #065f46;
+            font-size: 0.9rem;
+        }
+
+        .user-type {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .metric-value {
+                font-size: 2rem;
+            }
+            
+            .action-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Autonomous Coaching Section Styles */
+        #features.services-section {
+            background: linear-gradient(135deg, var(--indigo-primary), var(--sky-blue));
+            color: white;
+            position: relative;
+        }
+
+        #features.services-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="30" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            pointer-events: none;
+        }
+
+        #features .section-header {
+            position: relative;
+            z-index: 1;
+        }
+
+        #features .section-title {
+            color: white;
+        }
+
+        #features .section-subtitle {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        #features .service-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+        }
+
+        #features .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.35);
+        }
+
+        #features .service-card .cta-button,
+        #features .service-card button {
+            background-color: var(--emerald-primary);
+            color: white;
+        }
+
+        #features .service-card .cta-button:hover,
+        #features .service-card button:hover {
+            background-color: var(--emerald-dark);
+        }
+
+        #features .service-icon {
+            background: linear-gradient(45deg, var(--emerald-primary), var(--sky-blue));
+        }
+
+        #features .service-icon i {
+            color: white;
+        }
+
+        /* Portfolio Section Styles */
+        .portfolio-section {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .portfolio-card {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .portfolio-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .portfolio-description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .portfolio-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .portfolio-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .portfolio-link:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .portfolio-link.secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .portfolio-link.secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.25rem 0.75rem;
+            background: #e2e8f0;
+            color: var(--text-secondary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .portfolio-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .portfolio-stats .stat-item {
+            text-align: center;
+        }
+
+        .portfolio-stats .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .portfolio-stats .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .portfolio-links {
+                flex-direction: column;
+            }
+            
+            .portfolio-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">
+                <a href="index.html">
+                    <i class="fas fa-chart-line"></i>
+                    Intellect<span>Money</span>
+                </a>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#features">AI Features</a></li>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="register.html" class="cta-button">Start Coaching</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <h1>Your <span class="highlight">Autonomous Financial Coach</span> is Always Watching</h1>
+            <p>AI-powered coaching that monitors your cash flow 24/7, predicts financial problems before they happen, and automatically takes smart micro-actions to secure your financial future. Adapts to your behavior and handles income variability.</p>
+            <div class="hero-actions">
+                <a href="#dashboard" class="btn-primary">Start Monitoring</a>
+                <a href="#features" class="btn-secondary">AI Features</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-container" data-aos="fade-up">
+            <div class="stat-card">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Background Monitoring</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">95%</div>
+                <div class="stat-label">Problem Prevention Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">Auto</div>
+                <div class="stat-label">Smart Actions</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">AI</div>
+                <div class="stat-label">Behavioral Learning</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="features" class="services-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Autonomous Coaching Features</h2>
+                <p class="section-subtitle">AI-powered financial coaching that adapts to your behavior, handles income variability, and delivers personalized recommendations automatically.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="service-title">Cash Flow Monitoring</h3>
+                    <p class="service-description">Your AI coach watches your cash flow in the background 24/7 and alerts you before problems happen with your spending limits.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Real-time expense tracking</li>
+                        <li><i class="fas fa-check"></i> Predictive overdraft alerts</li>
+                        <li><i class="fas fa-check"></i> Automatic spending categorization</li>
+                        <li><i class="fas fa-check"></i> Smart budget adjustments</li>
+                    </ul>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="service-title">Automated Smart Actions</h3>
+                    <p class="service-description">AI can automate small financial actions like transferring excess funds, adjusting savings, and optimizing account balances.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Auto savings transfers</li>
+                        <li><i class="fas fa-check"></i> Bill payment optimization</li>
+                        <li><i class="fas fa-check"></i> Emergency fund topping</li>
+                        <li><i class="fas fa-check"></i> Investment rebalancing</li>
+                    </ul>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="service-title">Behavioral Adaptation</h3>
+                    <p class="service-description">Adapts to your real spending behavior patterns and adjusts recommendations based on your actual financial habits.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Spending pattern learning</li>
+                        <li><i class="fas fa-check"></i> Habit-based recommendations</li>
+                        <li><i class="fas fa-check"></i> Lifestyle adjustment alerts</li>
+                        <li><i class="fas fa-check"></i> Personalized goal setting</li>
+                    </ul>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <h3 class="service-title">Income Variability Handling</h3>
+                    <p class="service-description">Perfect for freelancers and gig workers - handles irregular income patterns and adjusts financial strategies accordingly.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Irregular income smoothing</li>
+                        <li><i class="fas fa-check"></i> Feast/famine budgeting</li>
+                        <li><i class="fas fa-check"></i> Emergency fund sizing</li>
+                        <li><i class="fas fa-check"></i> Gig work optimization</li>
+                    </ul>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="service-title">Personalized Recommendations</h3>
+                    <p class="service-description">Delivers hyper-personalized financial tips and recommendations based on your unique financial situation and goals.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> AI-driven insights</li>
+                        <li><i class="fas fa-check"></i> Custom saving strategies</li>
+                        <li><i class="fas fa-check"></i> Investment suggestions</li>
+                        <li><i class="fas fa-check"></i> Debt optimization plans</li>
+                    </ul>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="service-title">Predictive Protection</h3>
+                    <p class="service-description">Predicts financial problems before they happen and takes preventive actions to protect your financial health.</p>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check"></i> Risk prediction algorithms</li>
+                        <li><i class="fas fa-check"></i> Preventive action triggers</li>
+                        <li><i class="fas fa-check"></i> Financial health scoring</li>
+                        <li><i class="fas fa-check"></i> Crisis prevention alerts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Dashboard Section -->
+    <section id="dashboard" class="tools-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">AI Coaching Dashboard</h2>
+                <p class="section-subtitle">Real-time monitoring and intelligent insights powered by autonomous financial coaching AI.</p>
+            </div>
+            <div class="dashboard-grid">
+                <div class="dashboard-card cash-flow-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="dashboard-header">
+                        <h3><i class="fas fa-chart-line"></i> Cash Flow Monitor</h3>
+                        <span class="status-indicator live">LIVE</span>
+                    </div>
+                    <div class="metric-value">₹45,320</div>
+                    <div class="metric-label">Current Balance</div>
+                    <div class="trend-indicator positive">
+                        <i class="fas fa-arrow-up"></i> +₹2,850 this week
+                    </div>
+                    <div class="alert-box">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>AI Alert: Large expense detected tomorrow. Consider transferring ₹5K to checking account.</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card automation-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="dashboard-header">
+                        <h3><i class="fas fa-robot"></i> Smart Actions</h3>
+                        <span class="status-indicator active">AUTO</span>
+                    </div>
+                    <div class="action-list">
+                        <div class="action-item completed">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Transferred ₹3,000 to emergency fund</span>
+                            <small>2 hours ago</small>
+                        </div>
+                        <div class="action-item pending">
+                            <i class="fas fa-clock"></i>
+                            <span>Optimize bill payment timing</span>
+                            <small>Scheduled for tomorrow</small>
+                        </div>
+                        <div class="action-item suggested">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Increase SIP by ₹500 (income spike detected)</span>
+                            <button class="approve-btn">Approve</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card behavior-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="dashboard-header">
+                        <h3><i class="fas fa-brain"></i> Behavior Analysis</h3>
+                        <span class="status-indicator learning">LEARNING</span>
+                    </div>
+                    <div class="behavior-insights">
+                        <div class="insight-item">
+                            <span class="insight-label">Spending Pattern</span>
+                            <span class="insight-value">Weekend Heavy</span>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-label">Risk Tolerance</span>
+                            <span class="insight-value">Moderate-High</span>
+                        </div>
+                        <div class="insight-item">
+                            <span class="insight-label">Saving Motivation</span>
+                            <span class="insight-value">Goal-Oriented</span>
+                        </div>
+                    </div>
+                    <div class="personalization-note">
+                        <i class="fas fa-user-cog"></i>
+                        <span>AI is adapting recommendations based on your behavior patterns</span>
+                    </div>
+                </div>
+                
+                <div class="dashboard-card income-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="dashboard-header">
+                        <h3><i class="fas fa-chart-bar"></i> Income Variability</h3>
+                        <span class="status-indicator tracking">TRACKING</span>
+                    </div>
+                    <div class="income-metrics">
+                        <div class="metric-row">
+                            <span>3-Month Average</span>
+                            <span class="value">₹52,000</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Variance</span>
+                            <span class="value high">±28%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span>Buffer Status</span>
+                            <span class="value good">Optimal</span>
+                        </div>
+                    </div>
+                    <div class="gig-worker-note">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Gig work patterns detected. Emergency fund sized accordingly.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Insights Section -->
+    <!--<section id="insights" class="testimonials-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Real User Success Stories</h2>
+                <p class="section-subtitle">See how our autonomous AI coaching has transformed financial lives through intelligent automation and personalized guidance.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <p class="testimonial-content">"The AI coach detected my irregular freelance income pattern and automatically adjusted my savings strategy. It prevented three potential overdrafts and increased my emergency fund by 40% without me even thinking about it."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SK</div>
+                        <div class="author-info">
+                            <h4>Sneha Kumar</h4>
+                            <p>Freelance Designer, Pune</p>
+                            <span class="user-type">Gig Worker</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <p class="testimonial-content">"The behavioral adaptation is incredible. It learned that I overspend on weekends and started automatically transferring money to my savings on Friday evenings. Saved me ₹25,000 in just 6 months."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">RM</div>
+                        <div class="author-info">
+                            <h4>Rahul Mehta</h4>
+                            <p>Software Developer, Bangalore</p>
+                            <span class="user-type">Salary Earner</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <p class="testimonial-content">"As someone with ADHD, I struggled with financial management. The AI takes care of everything in the background - optimizing payments, building my emergency fund, even suggesting investment adjustments. It's like having a financial guardian angel."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AD</div>
+                        <div class="author-info">
+                            <h4>Anita Das</h4>
+                            <p>Marketing Executive, Mumbai</p>
+                            <span class="user-type">ADHD Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </section>
+
+    <!-- Portfolio & Showcase Section -->
+    <section id="portfolio" class="portfolio-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Project Showcase & Links</h2>
+                <p class="section-subtitle">Explore the complete IntellectMoney ecosystem - view source code, live demos, and documentation.</p>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="portfolio-icon">
+                        <i class="fab fa-github"></i>
+                    </div>
+                    <h3 class="portfolio-title">Source Code</h3>
+                    <p class="portfolio-description">Complete source code repository with autonomous AI coaching algorithms, real-time dashboard, and behavioral analysis systems.</p>
+                    <div class="portfolio-links">
+                        <a href="https://github.com/your-username/intellectmoney" target="_blank" class="portfolio-link">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                        <a href="https://github.com/your-username/intellectmoney/releases" target="_blank" class="portfolio-link secondary">
+                            <i class="fas fa-download"></i> Download Latest
+                        </a>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">HTML5</span>
+                        <span class="tech-tag">CSS3</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Python</span>
+                    </div>
+                </div>
+                
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="portfolio-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="portfolio-title">Live Website</h3>
+                    <p class="portfolio-description">Experience the full IntellectMoney platform with autonomous financial coaching, real-time monitoring, and AI-powered insights.</p>
+                    <div class="portfolio-links">
+                        <a href="https://radiant-kulfi-dbd162.netlify.app/intellectmoney" target="_blank" class="portfolio-link">
+                            <i class="fas fa-external-link-alt"></i> Visit Live Site
+                        </a>
+                        <a href="https://radiant-kulfi-dbd162.netlify.app/intellectmoney" target="_blank" class="portfolio-link secondary">
+                            <i class="fas fa-chart-line"></i> Try Dashboard
+                        </a>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Netlify</span>
+                        <span class="tech-tag">Responsive</span>
+                        <span class="tech-tag">PWA Ready</span>
+                    </div>
+                </div>
+                
+                <div class="portfolio-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="portfolio-icon">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <h3 class="portfolio-title">Interactive Demo</h3>
+                    <p class="portfolio-description">Watch the autonomous AI coaching system in action with simulated data, real-time updates, and behavioral adaptation features.</p>
+                    <div class="portfolio-links">
+                        <a href="https://youtu.be/F97pWu6xGNM" target="_blank" class="portfolio-link">
+                            <i class="fab fa-youtube"></i> Watch Demo Video
+                        </a>
+                        <a href="#dashboard" class="portfolio-link secondary">
+                            <i class="fas fa-robot"></i> Try AI Coach
+                        </a>
+                    </div>
+                    <div class="tech-stack">
+                        <span class="tech-tag">AI Coaching</span>
+                        <span class="tech-tag">Real-time</span>
+                        <span class="tech-tag">Interactive</span>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            <div class="portfolio-stats" data-aos="fade-up" data-aos-delay="500">
+                <div class="stat-item">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Financial Features</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1,200+</div>
+                    <div class="stat-label">Lines of Code</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Problem Prevention</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">AI Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>IntellectMoney</h3>
+                <p>Revolutionary autonomous financial coaching platform that uses AI to monitor, predict, and optimize your financial health 24/7 through intelligent automation.</p>
+            </div>
+            <div class="footer-section">
+                <h3>AI Features</h3>
+                <ul>
+                    <li><a href="#features">Cash Flow Monitoring</a></li>
+                    <li><a href="#features">Automated Actions</a></li>
+                    <li><a href="#features">Behavioral Adaptation</a></li>
+                    <li><a href="#features">Income Variability</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul>
+                    <li><a href="#portfolio">View Source Code</a></li>
+                    <li><a href="#portfolio">Live Demo</a></li>
+                    <li><a href="#portfolio">Documentation</a></li>
+                    <li><a href="#portfolio">Project Showcase</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li><i class="fas fa-robot"></i> AI Support 24/7</li>
+                    <li><i class="fas fa-envelope"></i> hello@intellectmoney.ai</li>
+                    <li><i class="fas fa-brain"></i> Autonomous Learning</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 IntellectMoney. All rights reserved. | AI-Powered Financial Coaching Platform</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // SIP Calculator (removed - replaced with AI coaching)
+        // Autonomous Financial Coaching Dashboard Functions
+        function scrollToSection(sectionId) {
+            const target = document.getElementById(sectionId);
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+
+        // Simulate real-time cash flow updates
+        function updateCashFlow() {
+            const cashFlowElement = document.querySelector('.cash-flow-card .metric-value');
+            const trendElement = document.querySelector('.cash-flow-card .trend-indicator span');
+            
+            if (cashFlowElement && trendElement) {
+                // Simulate fluctuating balance
+                const baseAmount = 45320;
+                const variation = Math.random() * 1000 - 500;
+                const newAmount = Math.round(baseAmount + variation);
+                
+                cashFlowElement.textContent = '₹' + newAmount.toLocaleString('en-IN');
+                
+                // Update trend based on variation
+                if (variation > 0) {
+                    trendElement.innerHTML = '<i class="fas fa-arrow-up"></i> +₹' + Math.round(Math.abs(variation)) + ' this week';
+                    trendElement.parentElement.className = 'trend-indicator positive';
+                } else {
+                    trendElement.innerHTML = '<i class="fas fa-arrow-down"></i> -₹' + Math.round(Math.abs(variation)) + ' this week';
+                    trendElement.parentElement.className = 'trend-indicator negative';
+                }
+            }
+        }
+
+        // Simulate AI learning and behavior adaptation
+        function updateBehaviorInsights() {
+            const insights = [
+                { label: 'Spending Pattern', values: ['Weekend Heavy', 'Weekday Conservative', 'Evening Focused', 'Morning Saver'] },
+                { label: 'Risk Tolerance', values: ['Moderate-High', 'Conservative', 'Aggressive', 'Balanced'] },
+                { label: 'Saving Motivation', values: ['Goal-Oriented', 'Security-Focused', 'Growth-Driven', 'Emergency-First'] }
+            ];
+            
+            insights.forEach((insight, index) => {
+                const element = document.querySelectorAll('.insight-value')[index];
+                if (element) {
+                    const randomValue = insight.values[Math.floor(Math.random() * insight.values.length)];
+                    element.textContent = randomValue;
+                }
+            });
+        }
+
+        // Handle approve button clicks for AI suggestions
+        function handleApproval(event) {
+            if (event.target.classList.contains('approve-btn')) {
+                const actionItem = event.target.closest('.action-item');
+                actionItem.classList.remove('suggested');
+                actionItem.classList.add('completed');
+                event.target.textContent = 'Approved';
+                event.target.disabled = true;
+                
+                // Show success notification
+                showNotification('AI action approved successfully!', 'success');
+            }
+        }
+
+        // Show notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 1rem 2rem;
+                border-radius: 8px;
+                color: white;
+                font-weight: 600;
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                background: ${type === 'success' ? '#22c55e' : '#ef4444'};
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Add CSS for notification animation and negative trend
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            .trend-indicator.negative { color: #ef4444; }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize dashboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add event listeners for approve buttons
+            document.addEventListener('click', handleApproval);
+            
+            // Update dashboard data periodically to simulate real-time monitoring
+            setInterval(updateCashFlow, 30000); // Update every 30 seconds
+            setInterval(updateBehaviorInsights, 60000); // Update every minute
+            
+            // Initial behavior insights update
+            setTimeout(updateBehaviorInsights, 2000);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
