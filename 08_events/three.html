@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Learners Html</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+
+</body>
+<script>
+    // yeh method har ek specific time ke baad execute hota hi rahega
+       const sayDate = function(){
+            console.log("Hi, Shivanshu", Date.now());
+    
+        }
+
+       const intervalID =  setInterval(sayDate, 1000, "Hiiii")
+
+        //rokne ke liye. aur reference bhi lagta hai
+        clearInterval(intervalID)
+</script>
+</html>
