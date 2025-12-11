@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Asynchronous JavaScript</h1>
+    <button id="stop">Stop</button>
+</body>
+<script>
+    const sayShiv = function () {
+            console.log("Shivanshu");
+        }
+
+       const sayName = function(){
+         document.querySelector("h1").innerHTML = "best Name"
+       }
+    const sayVar = setTimeout(sayName, 2000) // method hai aur API ko bhi call karta hai. 2000 ms ka time diya aur uske baad woh method execute hua
+
+    clearTimeout(sayVar)
+
+</script>
+
+</html>
