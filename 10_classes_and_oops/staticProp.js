@@ -12,7 +12,7 @@ class User{
         return `123`
     }
 }
-
+//const me = {}
 const guts = new User("guts")
 console.log(guts.createId())
 
